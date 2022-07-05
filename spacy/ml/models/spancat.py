@@ -1,11 +1,13 @@
 from typing import List, Tuple, cast
-from thinc.api import Model, with_getitem, chain, list2ragged, Logistic
-from thinc.api import Maxout, Linear, concatenate, glorot_uniform_init
-from thinc.api import reduce_mean, reduce_max, reduce_first, reduce_last
-from thinc.types import Ragged, Floats2d
 
-from ...util import registry
+from thinc.api import Linear, Logistic, Maxout, Model, Softmax, chain
+from thinc.api import concatenate, glorot_uniform_init, list2ragged
+from thinc.api import reduce_first, reduce_last, reduce_max, reduce_mean
+from thinc.api import with_getitem
+from thinc.types import Floats2d, Ragged
+
 from ...tokens import Doc
+from ...util import registry
 from ..extract_spans import extract_spans
 
 
@@ -15,6 +17,14 @@ def build_linear_logistic(nO=None, nI=None) -> Model[Floats2d, Floats2d]:
     followed by a logistic activation.
     """
     return chain(Linear(nO=nO, nI=nI, init_W=glorot_uniform_init), Logistic())
+
+
+@registry.layers("spacy.Softmax.v1")
+def build_softmax(nO=None, nI=None) -> Model[Floats2d, Floats2d]:
+    """An output layer for span classification. Uses a softmax layer for
+    exclusive classes
+    """
+    return Softmax(nO=nO, nI=nI, init_W=glorot_uniform_init)
 
 
 @registry.layers("spacy.mean_max_reducer.v1")
