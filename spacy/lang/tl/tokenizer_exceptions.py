@@ -6,8 +6,6 @@ _exc = {
     "isa'y": [{ORTH: "isa"}, {ORTH: "'y", NORM: "ay"}],
     "baya'y": [{ORTH: "baya"}, {ORTH: "'y", NORM: "ay"}],
     "sa'yo": [{ORTH: "sa"}, {ORTH: "'yo", NORM: "iyo"}],
-    "ano'ng": [{ORTH: "ano"}, {ORTH: "'ng", NORM: "ang"}],
-    "anong": [{ORTH: "ano"}, {ORTH: "ng", NORM: "ang"}],
     "ilang": [{ORTH: "ila", NORM: "ilan"}, {ORTH: "ng", NORM: "ang"}],
     "nawa'y": [{ORTH: "nawa"}, {ORTH: "'y", NORM: "ay"}],
     "papa'no": [{ORTH: "papa'no", NORM: "papaano"}],
@@ -28,5 +26,17 @@ for pron in ["ako", "tayo", "kami", "kayo", "iyo", "siya", "sila", "kanya", "kan
             {ORTH: "'y", NORM: "ay"},
         ]
 
+# W-words
+for word in ["sino", "ano"]:
+    for orth in [word, word.title()]:
+        _exc[orth + "ng"] = [
+            {ORTH: orth, NORM: word},
+            {ORTH: "ng", NORM: "ang"},
+        ]
+
+        _exc[orth + "'ng"] = [
+            {ORTH: orth, NORM: word},
+            {ORTH: "'ng", NORM: "ang"},
+        ]
 
 TOKENIZER_EXCEPTIONS = update_exc(BASE_EXCEPTIONS, _exc)
