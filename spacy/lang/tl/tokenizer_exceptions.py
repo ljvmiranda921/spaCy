@@ -29,6 +29,4 @@ for pron in ["ako", "tayo", "kami", "kayo", "iyo", "siya", "sila", "kanya", "kan
         ]
 
 
-
-
 TOKENIZER_EXCEPTIONS = update_exc(BASE_EXCEPTIONS, _exc)
